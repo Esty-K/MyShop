@@ -20,7 +20,7 @@ namespace MyShop.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "Shbat", "Shalom" };
+            return new string[] { "Shbat1", "Shalom" };
         }
 
         // GET api/<Users>/5
