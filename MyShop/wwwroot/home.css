@@ -1,0 +1,10 @@
+﻿body {
+    text-align:center;
+    justify-content:center;
+}
+.signIn{
+    visibility:hidden;
+}
+.update {
+    visibility: hidden;
+}

@@ -1,0 +1,6 @@
+@MyShop_HostAddress = http://localhost:5227
+
+GET {{MyShop_HostAddress}}
+Accept: application/json
+
+###
