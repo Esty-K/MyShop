@@ -1,4 +1,5 @@
-﻿const hideSignInWhenUserIsIn = () => {
+﻿
+const hideSignInWhenUserIsIn = () => {
     const hide = document.querySelector(".signIn")
     hide.classList.remove("signIn")
 }
@@ -30,6 +31,25 @@ const validationCheck = (newUser) => {
     }
     else return "ok";
 }
+const checkPassword = async() => {
+    const progress = document.querySelector("#progress")
+    const password = document.querySelector("#password").value
+    try {
+        const responsePost = await fetch(`api/Users/password/?password=${password}`, {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            query: password
+        });
+        const dataPost = await responsePost.json();
+        progress.value = dataPost;
+    }
+    catch (responsePost) {
+        alert(responsePost.status)
+        throw new Error(`HTTP error! status ${responsePost.status}`)
+
+    }
+}
+
 const signIn = async () => {
     const newUser = getAllUserDetails();
     const res = validationCheck(newUser);
@@ -43,12 +63,13 @@ const signIn = async () => {
                 body: JSON.stringify(newUser)
             });
             const dataPost = await responsePost.json();
-            console.log('post data', dataPost);
+            if (dataPost.password == "weak")
+                throw new Error("the password is weak")
             alert("user added")
 
         }
-        catch {
-          // if (!responsePost.ok) 
+        catch (error) {
+            alert(error)
                 throw new Error(`HTTP error! status ${responsePost.status}`)
             
         }

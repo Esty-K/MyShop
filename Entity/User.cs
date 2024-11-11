@@ -11,6 +11,6 @@ namespace MyShop
         public string FirstName { get; set; }
         [StringLength(20, ErrorMessage = "lastName can be between 2 till 20", MinimumLength = 2)]
         public string LastName { get; set; }
-        public int UserId { get; set; }
+        public int UserId { get; set; } = 0;
     }
 }

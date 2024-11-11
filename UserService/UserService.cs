@@ -20,8 +20,15 @@ namespace Services
         {
             var result = Zxcvbn.Core.EvaluatePassword(user.Password);
             if (result.Score < 3)
-                return null;
+            {
+                user.Password = "weak";
+                return user;
+            }
             return repository.Post(user);
+        }
+        public int PostPassword(string password) {
+           var result = Zxcvbn.Core.EvaluatePassword(password);
+            return result.Score;
         }
 
         public User PostLogin(string email, string password)
