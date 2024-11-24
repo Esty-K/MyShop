@@ -35,6 +35,7 @@ namespace MyShop.Controllers
         public ActionResult<User> Post([FromBody] User user)
         {
            User u =service.Post(user);
+            //if user
             return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
         }
 

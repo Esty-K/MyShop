@@ -38,7 +38,7 @@ namespace Services
 
 
         public User Put(int id, User userToUpdate)
-        {
+        {  //check password strength
             return repository.Put(id, userToUpdate);
         }
 

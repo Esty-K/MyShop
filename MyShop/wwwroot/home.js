@@ -113,6 +113,9 @@ const updateDetails = async () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newUser)
         });
+        //if status==400
+        //weak password
+       
         alert("Uset updated sucssesfully")
     }
      catch {
