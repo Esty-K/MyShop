@@ -55,7 +55,7 @@ const signIn = async () => {
     const res = validationCheck(newUser);
     if (res != "ok")
         alert(res);
-    else {
+
         try {
             const responsePost = await fetch("api/Users", {
                 method: 'post',
@@ -63,7 +63,7 @@ const signIn = async () => {
                 body: JSON.stringify(newUser)
             });
             const dataPost = await responsePost.json();
-            if (dataPost.password == "weak")
+            if (dataPost.status==400)
                 throw new Error("the password is weak")
             alert("user added")
 
@@ -72,7 +72,7 @@ const signIn = async () => {
             alert(error)
                 throw new Error(`HTTP error! status ${responsePost.status}`)
             
-        }
+        
     }
 }
 const logIn = async () => {
@@ -113,9 +113,13 @@ const updateDetails = async () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newUser)
         });
+        if (responsePut.status == 400) {
+            throw new Error("the password is weak");
+        }
         alert("Uset updated sucssesfully")
     }
-     catch {
+    catch (error) {
+        alert(error)
         if (!responsePut.ok) {
             throw new Error(`HTTP error! status ${responsePut.status}`)
         }

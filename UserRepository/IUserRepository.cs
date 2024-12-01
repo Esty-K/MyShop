@@ -1,14 +1,12 @@
-﻿using MyShop;
+﻿using Entity;
 
 namespace Repositories
 {
     public interface IUserRepository
     {
         void Delete(int id);
-        IEnumerable<string> Get();
-        string GetById(int id);
-        User Post(User user);
-        User PostLogin(string email, string password);
-        User Put(int id, User userToUpdate);
+        Task<User> Post(User user);
+        Task<User> PostLogin(string email, string password);
+        Task<User> Put(int id, User userToUpdate);
     }
 }
