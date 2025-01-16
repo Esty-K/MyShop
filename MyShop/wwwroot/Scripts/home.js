@@ -88,8 +88,8 @@ const logIn = async () => {
         
         const dataPost = await responsePost.json();
         alert(`WELCOME ${dataPost.firstName}`)
-        sessionStorage.setItem("id", dataPost.userId)
-        window.location.href = "UpdateUserDetails.html"
+        sessionStorage.setItem("userId", dataPost.userId)
+        window.location.href = "Products.html"
 
 
     }

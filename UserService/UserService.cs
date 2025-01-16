@@ -15,6 +15,11 @@ namespace Services
         {
             this.repository = userRepository;
         }
+
+        public async Task<User> GetById(int id)
+        {
+            return await repository.GetById(id);
+        }
         public async Task<User> Post(User user)
         {
             var result = Zxcvbn.Core.EvaluatePassword(user.Password);
@@ -51,10 +56,6 @@ namespace Services
         }
 
 
-        public void Delete(int id)
-        {
-
-        }
 
     }
 }

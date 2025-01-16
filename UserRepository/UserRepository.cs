@@ -7,36 +7,40 @@ namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
-        UserContext userContext;
+        ShopContext shopContext;
 
-        public UserRepository(UserContext userContext)
+        public UserRepository(ShopContext shopContext)
         {
-            this.userContext = userContext;
+            this.shopContext = shopContext;
+        }
+
+        public async Task<User> GetById(int id)
+        {
+            User user = await shopContext.Users.FirstOrDefaultAsync(u => u.UserId == id);
+            return user;
         }
         public async Task<User> Post(User user)
         {
-            await userContext.Users.AddAsync(user);
-            await userContext.SaveChangesAsync();
+            await shopContext.Users.AddAsync(user);
+            await shopContext.SaveChangesAsync();
             return user;
         }
 
         public async Task<User> PostLogin(string email, string password)
         {
-            User user = await userContext.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+            User user = await shopContext.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
             return user;
         }
 
 
-        public async Task<User> Put(int id, User userToUpdate)
+        public async Task<User> Put(int id, User user)
         {
-            userContext.Users.Update(userToUpdate);
-            await userContext.SaveChangesAsync();
-            return userToUpdate;
+            user.UserId = id;
+            shopContext.Users.Update(user);
+            await shopContext.SaveChangesAsync();
+            return user;
         }
 
-        public void Delete(int id)
-        {
-        }
     }
 }
 
