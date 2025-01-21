@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Entity;
+using Entities;
 namespace Repositories;
 
 public partial class ShopContext : DbContext
@@ -24,10 +25,11 @@ public partial class ShopContext : DbContext
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Rating> Ratings { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Server=SRV2\\PUPILS;Database=214804460_Shop;Trusted_Connection=True;TrustServerCertificate=True");
+    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+    //        => optionsBuilder.UseSqlServer("Server=SRV2\\PUPILS;Database=214804460_Shop;Trusted_Connection=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -95,7 +97,35 @@ public partial class ShopContext : DbContext
                 .HasMaxLength(20)
                 .IsFixedLength();
         });
+        modelBuilder.Entity<Rating>(entity =>
+        {
+            entity.ToTable("Rating");
 
+            entity.Property(e => e.RatingId).HasColumnName("RATING_ID");
+
+            entity.Property(e => e.Host)
+                .HasColumnName("HOST")
+                .HasMaxLength(50);
+
+            entity.Property(e => e.Method)
+                .HasColumnName("METHOD")
+                .HasMaxLength(10)
+                .IsFixedLength();
+
+            entity.Property(e => e.Path)
+                .HasColumnName("PATH")
+                .HasMaxLength(50);
+
+            entity.Property(e => e.RecordDate)
+             .HasColumnName("Record_Date")
+             .HasColumnType("datetime");
+
+            entity.Property(e => e.Referer)
+                .HasColumnName("REFERER")
+                .HasMaxLength(100);
+
+            entity.Property(e => e.UserAgent).HasColumnName("USER_AGENT");
+        });
         OnModelCreatingPartial(modelBuilder);
     }
 

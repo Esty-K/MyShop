@@ -13,8 +13,8 @@ namespace MyShop.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        ICategoryService service;
-        IMapper mapper;
+        private readonly ICategoryService service;
+        private readonly IMapper mapper;
 
         public CategoriesController(ICategoryService categoryservice , IMapper mapper)
         { 

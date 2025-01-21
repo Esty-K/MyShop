@@ -12,8 +12,8 @@ namespace MyShop.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        IOrderService service;
-        IMapper mapper;
+        private readonly IOrderService service;
+        private readonly IMapper mapper;
         public OrdersController(IOrderService service, IMapper mapper)
         {
             this.mapper = mapper;

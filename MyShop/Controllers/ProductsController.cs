@@ -14,8 +14,8 @@ namespace MyShop.Controllers
     {
 
 
-        IProductService service;
-        IMapper mapper;
+        private readonly IProductService service;
+        private readonly IMapper mapper;
 
         public ProductsController(IProductService service, IMapper mapper)
         {
