@@ -3,7 +3,7 @@ const checkedCategories = []
 let minPrice = 0
 let maxPrice = 0
 let nameSearch = ''
-const cards = async () => {
+const cards = async () => {// divide to 2 funcs- drawProducts and drawOne
     const products = await getProducts();
     document.getElementById("PoductList").innerHTML = ''
     let tempCard = document.getElementById("temp-card");
@@ -23,7 +23,7 @@ const addToCart = (product) => {
     sessionStorage.setItem("cart", JSON.stringify(cart))
     document.getElementById("ItemsCountText").innerText = cart.length
 }
-const categories = async () => {
+const categories = async () => { // divide to 2 funcs
     const categories = await getCategories();
     let tempCategory = document.getElementById("temp-category")
     categories.forEach(category => {
@@ -54,7 +54,7 @@ const getProducts = async () => {
     try {
         let url = `api/Products/?`;
         if (checkedCategories.length > 0)
-            for (var i = 0; i < checkedCategories.length; i++) {
+            for (var i = 0; i < checkedCategories.length; i++) {// map is nicer
                 url += `&categoryIds=${checkedCategories[i]}`
             }
         if (minPrice > 0)
