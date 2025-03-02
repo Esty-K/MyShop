@@ -55,6 +55,7 @@ placeOrder = async () => {
         const order = {
             UserId: Number(JSON.parse(sessionStorage.getItem("userId"))),
             Date: new Date(),
+            Sum: Number(document.getElementById("totalAmount").innerText),
             OrderItems: JSON.parse(sessionStorage.getItem("cart")).map(item => { return { productId: item.id, quantity: item.quantity } })
         };
         const responsePost = await fetch(`api/Orders`, {
@@ -64,9 +65,12 @@ placeOrder = async () => {
         });
 
         const dataPost = await responsePost.json();
-        alert(`Your order number ${dataPost.id} has been successfully received`)
-        sessionStorage.setItem("cart", JSON.stringify([]))
-        window.location.reload()
+        console.log(dataPost)
+       
+            alert(`Your order number ${dataPost.id} has been successfully received`)
+            sessionStorage.setItem("cart", JSON.stringify([]))
+            window.location.reload()
+        
     }
 
     catch (error) {

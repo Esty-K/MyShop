@@ -28,7 +28,12 @@ namespace Repositories
             return products;
 
         }
+        public async Task<double> GetProductPrice(int id)
+        {
+            Product product = await shopContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+            return product.Price;
 
+        }
     }
 }
 
