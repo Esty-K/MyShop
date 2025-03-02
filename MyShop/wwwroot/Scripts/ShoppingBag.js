@@ -54,7 +54,7 @@ placeOrder = async () => {
             UserId: Number(JSON.parse(sessionStorage.getItem("userId"))),
             Date: new Date(),
             Sum: Number(document.getElementById("totalAmount").innerText),
-            OrderItems: JSON.parse(sessionStorage.getItem("cart")).map(item => { return { productId: item.id, quantity: item.quantity } })
+            OrderItems: getOrderItems().map(item => { return { productId: item.id, quantity: item.quantity } })
         };
         const responsePost = await fetch(`api/Orders`, {
             method: 'post',
