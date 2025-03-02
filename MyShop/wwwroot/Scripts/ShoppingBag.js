@@ -5,20 +5,18 @@
     document.getElementById("totalAmount").innerText = orderItems.reduce((sum, item) => sum + item.price, 0)
 }
 getOrderItems = () => {
-    const cart = JSON.parse(sessionStorage.getItem("cart"))
-    const quantity = cart.map(product => {
-        const quantity = cart.filter(i => i.id == product.id)
-        return {
-            ...product,
-            quantity: quantity.length
+    const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    const quantity = cart.reduce((acc, product) => {
+        const existingProduct = acc.find(p => p.id === product.id);
+        if (existingProduct) {
+            existingProduct.quantity++;
+        } else {
+            acc.push({ ...product, quantity: 1 });
         }
-    }
-    )
-    //צריך לפלטר כך שכל מוצר יופיע פעם אחת
-    console.log(quantity)
+        return acc;
+    }, []);
     return quantity;
-
-}
+};
 orderItem = () => {
     const orderItems = getOrderItems()
     let tempCard = document.getElementById("temp-row");
