@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MyShop;
 using NLog.Web;
+using PresidentsApp.Middlewares;
 using Repositories;
 using Services;
 
@@ -38,7 +39,7 @@ if (app.Environment.IsDevelopment())
 
 // Configure the HTTP request pipeline.
 
-
+app.UseErrorHandlingMiddleware();
 app.UseRatingMiddleware();
 
 app.UseHttpsRedirection();

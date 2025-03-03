@@ -47,7 +47,7 @@ namespace MyShop.Controllers
                 UserDTO userdto = mapper.Map<User, UserDTO>(newUser);
                 return CreatedAtAction(nameof(GetById), new { id = newUser.UserId }, userdto);
             }
-            return BadRequest();
+            return BadRequest("The password is too weak");
         }
 
         [HttpPost]
@@ -80,7 +80,7 @@ namespace MyShop.Controllers
             var updateUser = await service.Put(id,userToUpdate);
             if (updateUser != null)
             {
-                return Ok();
+                return Ok("The password is too weak");
             }
             return BadRequest();
         }

@@ -16,11 +16,15 @@ namespace MyShop.Controllers
 
         private readonly IProductService service;
         private readonly IMapper mapper;
+        private readonly ILogger<UsersController> logger;
 
-        public ProductsController(IProductService service, IMapper mapper)
+        public ProductsController(IProductService service, IMapper mapper, ILogger<UsersController> logger)
         {
             this.mapper = mapper;
             this.service = service;
+            this.logger = logger;
+            logger.LogInformation("Logged From Product Controller");
+
         }
         // GET: api/<ProductsController>
         [HttpGet]

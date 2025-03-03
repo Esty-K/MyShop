@@ -2,7 +2,7 @@
     orderItem()
     document.getElementById("itemCount").innerText = JSON.parse(sessionStorage.getItem("cart")).length
     const orderItems = getOrderItems()
-    document.getElementById("totalAmount").innerText = orderItems.reduce((sum, item) => sum + item.price, 0)
+    document.getElementById("totalAmount").innerText = orderItems.reduce((sum, item) => sum + item.price*item.quantity, 0)
 }
 getOrderItems = () => {
     const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
@@ -32,9 +32,13 @@ orderItem = () => {
     })
 }
 removeItem = (item) => {
-    let orderItems = getOrderItems()
-    const index = orderItems.findIndex(o => o.name == item.name);
-    orderItems.splice(index, 1)
+    let index
+    let orderItems = JSON.parse(sessionStorage.getItem("cart")) || []
+    while (index != -1) {
+        index = orderItems.findIndex(o => o.name == item.name);
+        if (index != -1)
+            orderItems.splice(index, 1)
+    }
     sessionStorage.setItem("cart", JSON.stringify(orderItems))
     window.location.reload()
 }
@@ -53,7 +57,7 @@ placeOrder = async () => {
         const order = {
             UserId: Number(JSON.parse(sessionStorage.getItem("userId"))),
             Date: new Date(),
-            Sum: Number(document.getElementById("totalAmount").innerText),
+            Sum: Number(document.getElementById("totalAmount").textContent),
             OrderItems: getOrderItems().map(item => { return { productId: item.id, quantity: item.quantity } })
         };
         const responsePost = await fetch(`api/Orders`, {
@@ -63,11 +67,14 @@ placeOrder = async () => {
         });
 
         const dataPost = await responsePost.json();
-        console.log(dataPost)
-       
-            alert(`Your order number ${dataPost.id} has been successfully received`)
+        if (dataPost.status == 400)
+            alert(`Your order sum is uncorrect refresh and try again`)
+        else {
+  alert(`Your order number ${dataPost.id} has been successfully received`)
             sessionStorage.setItem("cart", JSON.stringify([]))
             window.location.reload()
+        }
+          
         
     }
 
@@ -80,4 +87,5 @@ placeOrder = async () => {
         }
     }
 }
+
 

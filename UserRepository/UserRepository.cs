@@ -23,7 +23,9 @@ namespace Repositories
         {
             await shopContext.Users.AddAsync(user);
             await shopContext.SaveChangesAsync();
-            return user;
+            if(user.UserId!=0)
+                return user;
+            return null;
         }
 
         public async Task<User> PostLogin(string email, string password)
