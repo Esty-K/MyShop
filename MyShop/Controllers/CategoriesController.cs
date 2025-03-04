@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory; // Add this line
+using Microsoft.Extensions.Caching.Memory;
 using System.Text.Json;
 using Services;
 using Entity;
 using AutoMapper;
 using DTO;
 using System.Collections.Generic;
+using MyShop;
 
 namespace MyShop.Controllers
 {
@@ -15,36 +16,31 @@ namespace MyShop.Controllers
     {
         private readonly ICategoryService service;
         private readonly IMapper mapper;
-        private readonly IMemoryCache cache; // Add this line
-        private const string CacheKey = "categoriesCache"; // Add this line
+        private readonly IMemoryCache cache;
 
-        public CategoriesController(ICategoryService categoryservice, IMapper mapper, IMemoryCache cache) // Modify constructor
+        public CategoriesController(ICategoryService categoryservice, IMapper mapper, IMemoryCache cache)
         {
             this.mapper = mapper;
             this.service = categoryservice;
-            this.cache = cache; // Add this line
+            this.cache = cache;
         }
 
         // GET: api/<Categories>
         [HttpGet]
-        public async Task<ActionResult<List<CategoryDTO>>> Get() // Modify return type
+        public async Task<ActionResult<List<CategoryDTO>>> Get()
         {
-            if (!cache.TryGetValue(CacheKey, out List<CategoryDTO> categoriesDTO)) // Add caching logic
+
+
+            if (!cache.TryGetValue("categoriesCache", out List<Category> categories))
             {
-                List<Category> categories = await service.Get();
-                if (categories != null)
-                {
-                    categoriesDTO = mapper.Map<List<Category>, List<CategoryDTO>>(categories);
-                    var cacheEntryOptions = new MemoryCacheEntryOptions()
-                        .SetSlidingExpiration(TimeSpan.FromMinutes(30)); // Set cache duration
-                    cache.Set(CacheKey, categoriesDTO, cacheEntryOptions);
-                }
-                else
-                {
-                    return BadRequest();
-                }
+                categories = await service.Get();
+                cache.Set("categoriesCache", categories, TimeSpan.FromMinutes(30));
             }
+
+            List<CategoryDTO> categoriesDTO = mapper.Map<List<Category>, List<CategoryDTO>>(categories);
             return Ok(categoriesDTO);
+
         }
+
     }
 }

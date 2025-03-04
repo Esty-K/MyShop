@@ -1,24 +1,41 @@
-﻿<!DOCTYPE html>
-<html>
+﻿﻿
+<!DOCTYPE html>
+<html lang="he">
 <head>
     <meta charset="utf-8" />
-    <script src="./Scripts/home.js" ></script>
-    <link href="./Styles/home.css" rel="stylesheet"/>
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./Scripts/home.js"></script>
+    <link href="./Styles/home.css" rel="stylesheet" />
+    <title>Login and registration</title>
 </head>
 <body>
 
-    <input type="email" id="loginUserName" placeholder="uaerName" />
-    <input type="password" id="loginPassword" placeholder="password" />
-    <button onclick="logIn()">log in</button>
-    <button onclick="hideSignInWhenUserIsIn()">new user</button>
-    <div class="signIn">
-        <input type="email" id="userName" placeholder="uaerName"  />
-        <input type="password" id="password" placeholder="password" onblur="checkPassword()" />
-        <progress max="4" value="0" id="progress"></progress>
-        <input type="text" id="firstName" placeholder="firstName" />
-        <input type="text" id="lastName" placeholder="lastName" />
-        <button onclick="signIn()">sign in</button>
+    <div class="container">
+        <body>
+
+            <!-- טופס כניסה -->
+            <div class="loginForm">
+                <input type="email" id="loginUserName" placeholder="userName" />
+                <input type="password" id="loginPassword" placeholder="password" />
+                <button onclick="logIn()">Log In</button>
+                <button onclick="onNewUserClick()">New User</button>
+            </div>
+
+            <!-- טופס רישום -->
+            <div class="signIn" style="display: none;">
+                <input type="email" id="userName" placeholder="userName" />
+                <input type="password" id="password" placeholder="password" onblur="checkPassword()" />
+                <progress id="progress" max="4" value="0"></progress>
+                <input type="text" id="firstName" placeholder="First Name" />
+                <input type="text" id="lastName" placeholder="Last Name" />
+                <button onclick="signIn()">Sign In</button>
+                <br />
+                <a href="home.html">Back to the login page</a>
+            </div>
+
+        </body>
+
     </div>
+
 </body>
 </html>

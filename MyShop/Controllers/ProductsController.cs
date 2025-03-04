@@ -23,7 +23,7 @@ namespace MyShop.Controllers
             this.mapper = mapper;
             this.service = service;
             this.logger = logger;
-            logger.LogInformation("Logged From Product Controller");
+            logger.LogInformation("the application is up");
 
         }
         // GET: api/<ProductsController>

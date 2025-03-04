@@ -21,7 +21,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
-builder.Services.AddDbContext<ShopContext>(optionsBuilder => optionsBuilder.UseSqlServer("Server=ESTY;Database=214804460_Shop;Trusted_Connection=True;TrustServerCertificate=True", m=>m.MigrationsAssembly("MyShop")));
+builder.Services.AddDbContext<ShopContext>(optionsBuilder => optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("school"), m=>m.MigrationsAssembly("MyShop")));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -1,9 +1,31 @@
-﻿const hideSignInWhenUserIsIn = () => {
+﻿const onNewUserClick = () => {
+    const loginForm = document.querySelector('.loginForm'); // טופס הכניסה
+    const signInForm = document.querySelector('.signIn'); // טופס הרישום
+
+    // מסתיר את טופס הכניסה ומציג את טופס הרישום
+    loginForm.style.display = "none";
+    signInForm.style.display = "block";
+}
+const hideSignInWhenUserIsIn = () => {
     document.querySelector(".signIn").classList.remove("signIn");
 };
 
 const hideUpdate = () => {
     document.querySelector(".update").classList.remove("update");
+};
+const showUpdate = () => {
+    // בודק אם יש id של משתמש בסשן
+    const userId = sessionStorage.getItem("userId");
+
+    if (!userId) {
+        alert("You must log in first")
+
+        window.location.href = "home.html"; // הכנס את שם הדף של טופס הכניסה
+    } else {
+        // אם יש id, הצג את טופס העדכון
+        const updateForm = document.querySelector(".update");
+        updateForm.style.display = "block"; // מציג את טופס העדכון
+    }
 };
 
 const getAllUserDetails = () => {
@@ -80,6 +102,7 @@ const signIn = async () => {
             throw new Error("The password is weak");
         }
         alert("User added");
+        window.location.href = "home.html";
     } catch (error) {
         alert(error);
     }
@@ -112,7 +135,7 @@ const updateDetails = async () => {
         return alert(validationResult);
     }
     try {
-        const response = await fetch(`api/Users/${sessionStorage.getItem("id")}`, {
+        const response = await fetch(`api/Users/${sessionStorage.getItem("userId")}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newUser)
@@ -121,7 +144,9 @@ const updateDetails = async () => {
             throw new Error("The password is weak");
         }
         alert("User updated successfully");
+        window.location.href = "Products.html";
     } catch (error) {
         alert(`HTTP error! status ${error.status}`);
     }
 };
+
